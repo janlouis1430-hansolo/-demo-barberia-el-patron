@@ -72,6 +72,7 @@ LO QUE EL BOT NO DEBE HACER
 `;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false })); // Twilio manda formularios, no JSON
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Llama al helper Python que usa la key de Groq guardada en la bóveda.
@@ -249,6 +250,37 @@ app.post('/webhook/whatsapp', async (req, res) => {
   } catch (err) {
     console.error('Error en webhook WhatsApp:', err.message);
   }
+});
+
+// --- Webhook de Twilio (WhatsApp Sandbox) ---
+// Twilio envía POST con formulario (Body, From=whatsapp:+...). Se responde con
+// TwiML (XML), sin necesidad de tokens extra. Usa el mismo cerebro (getAiReply).
+function escapeXml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+app.post('/webhook/twilio', async (req, res) => {
+  const from = req.body && req.body.From ? String(req.body.From) : '';
+  const userText = req.body && req.body.Body ? String(req.body.Body).slice(0, 2000) : '';
+  let replyText = '';
+  try {
+    if (from.startsWith('whatsapp:') && userText.trim()) {
+      const reply = await getAiReply([{ role: 'user', content: userText }]);
+      if (reply && reply.trim()) replyText = reply.slice(0, 1500);
+    }
+  } catch (err) {
+    console.error('Error en webhook Twilio:', err.message);
+  }
+  res.type('text/xml');
+  if (replyText) {
+    return res.send(`<Response><Message>${escapeXml(replyText)}</Message></Response>`);
+  }
+  return res.send('<Response></Response>');
 });
 
 app.listen(PORT, () => {
