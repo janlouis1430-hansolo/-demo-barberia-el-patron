@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Barbería El Patrón ✂️</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="phone">
+    <header class="chat-header">
+      <div class="avatar">✂️</div>
+      <div class="header-info">
+        <div class="header-name">Barbería El Patrón ✂️</div>
+        <div class="header-status"><span class="dot"></span> en línea</div>
+      </div>
+    </header>
+
+    <main class="messages" id="messages" aria-live="polite"></main>
+
+    <div class="chips" id="chips">
+      <button class="chip" data-text="¿Cuánto cuesta un corte?">¿Cuánto cuesta un corte?</button>
+      <button class="chip" data-text="Quiero reservar">Quiero reservar</button>
+      <button class="chip" data-text="¿Abren los domingos?">¿Abren los domingos?</button>
+    </div>
+
+    <form class="input-bar" id="chat-form" autocomplete="off">
+      <input
+        type="text"
+        id="message-input"
+        placeholder="Escribe un mensaje"
+        maxlength="500"
+        aria-label="Escribe un mensaje"
+      />
+      <button type="submit" id="send-btn" aria-label="Enviar">➤</button>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

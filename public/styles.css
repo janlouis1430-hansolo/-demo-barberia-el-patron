@@ -1,0 +1,246 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #0b141a;
+  color: #e9edef;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.phone {
+  width: 100%;
+  max-width: 480px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #0b141a;
+}
+
+/* Encabezado */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #1f2c34;
+  border-bottom: 1px solid #2a3942;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #00a884;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.header-info {
+  min-width: 0;
+}
+
+.header-name {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-status {
+  font-size: 12px;
+  color: #aebac1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.header-status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00a884;
+  display: inline-block;
+}
+
+/* Área de mensajes */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #0b141a;
+  background-image: radial-gradient(#111b21 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.msg {
+  max-width: 80%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.bot {
+  align-self: flex-start;
+  background: #1f2c34;
+  border-top-left-radius: 4px;
+}
+
+.msg.user {
+  align-self: flex-end;
+  background: #005c4b;
+  border-top-right-radius: 4px;
+}
+
+.msg.system {
+  align-self: center;
+  background: #182229;
+  color: #ffd279;
+  font-size: 13px;
+  text-align: center;
+  max-width: 92%;
+  border: 1px solid #2a3942;
+}
+
+/* Indicador de "escribiendo" */
+.typing {
+  display: inline-flex;
+  gap: 5px;
+  padding: 12px 14px;
+}
+
+.typing span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #aebac1;
+  animation: blink 1.2s infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
+
+/* Sugerencias */
+.chips {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  background: #0b141a;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  background: transparent;
+  color: #53bdeb;
+  border: 1px solid #53bdeb;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.chip:active {
+  background: rgba(83, 189, 235, 0.15);
+}
+
+/* Barra de entrada */
+.input-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+  background: #1f2c34;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+#message-input {
+  flex: 1;
+  background: #2a3942;
+  border: none;
+  outline: none;
+  color: #e9edef;
+  font-size: 15px;
+  border-radius: 24px;
+  padding: 11px 16px;
+  min-width: 0;
+}
+
+#message-input::placeholder {
+  color: #8696a0;
+}
+
+#send-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: #00a884;
+  color: #0b141a;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#send-btn:active {
+  background: #06cf9c;
+}
+
+#send-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+@media (min-width: 520px) {
+  body {
+    align-items: center;
+    padding: 20px;
+  }
+  .phone {
+    height: min(92dvh, 860px);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #2a3942;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+}

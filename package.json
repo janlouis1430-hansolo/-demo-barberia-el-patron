@@ -1,0 +1,1 @@
+{"dependencies":{"express":"^4.21.2"},"description":"Demo de chatbot estilo WhatsApp para Barbería El Patrón (Bayamón, PR)","license":"UNLICENSED","main":"server.js","name":"demo-barberia-el-patron","scripts":{"start":"node server.js"},"version":"1.0.0"}
